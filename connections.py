@@ -90,6 +90,18 @@ def reg():
         print(cursor.fetchall())
 
     return render_template("register_form.html")
+@app.route('/admin', methods=["GET", "POST"])
+def admin():
+    if request.method == "POST":
+        # getting input with name = fname in HTML form
+        
+
+        conn=mysql.connect()
+        cursor=conn.cursor()
+        
+
+    return render_template("admin.html")
+
 
 if __name__ == '__main__':
     app.run(debug=True)
