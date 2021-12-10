@@ -1,0 +1,27 @@
+<h1> View Airports</h1>
+
+<form action="{{ url_for("view_airport")}}" method="post" enctype="multipart/form-data">
+    <label for="ID">ID:</label>
+    <input type="text" id="ID" name="ID" placeholder="ID">
+    <label for="tz">Time Zone:</label>
+    <input type="text" id="tz" name="tz" placeholder="Time Zone">
+    <input type="submit">
+<table>
+
+<tr>
+    <th>Airport ID</th>
+    <th>Name</th>
+    <th>Time Zone</th>
+    <th>Address</th>
+</tr>
+
+{% for a in airports %}
+<tr>
+{% for j in a %}
+<td>{{j}}</td>
+{% endfor %}
+</tr>
+{% endfor %}
+</table>
+
+<button type="reset">Reset</button>
