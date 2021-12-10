@@ -1,0 +1,28 @@
+<h1 style="color: cornflowerblue;font: 1em sans-serif; font-size: larger;align-items: center;"> Remove Flight</h1>
+<h1>  </h1>
+<h1> </h1>
+
+<form action="{{ url_for("remove_flight")}}" method="post" enctype="multipart/form-data">
+    <label for="Fno">Flight Number</label>
+    <input type="text" id="Fno" name="Fno" placeholder="Flight Number">
+    <label for="Date1">Date Range:</label>
+    <input type="date" id="Date1"name="Date1">
+    <label for="Date2"></label>
+    <input type="date" id="Date2" name="Date2">
+    <label for="airlines">Airlines:</label>
+    <select name= airlines action="/">
+        {% for a in airlines[1:] %}
+        <option value= "{{a}}" SELECTED>{{a}}</option>"
+        {% endfor %}
+    </select>
+    <label for="Current Date"> Current Date:</label>
+    <input type="date" id="Current Date" name="Current Date" placeholder="Current Date" value={{cur_date}} readonly>
+    <button type="submit">filter</button>
+    <p>
+    <table>
+    {% for f in fl %}
+    <input type="radio" name="options"id={{f}} value="hello"><tr>{% for k in f %} <td>{{k}}</td>{% endfor %}</tr><br>
+     {% endfor %}
+    <input type="submit">
+    <button type="reset">Reset</button>
+    </p>

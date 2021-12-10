@@ -1,0 +1,22 @@
+<h1> View Airlines</h1>
+<form action="{{ url_for("view_airlines")}}" method="post" enctype="multipart/form-data">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" placeholder="name">
+    <input type="submit">
+<table>
+
+<tr>
+    <th>Name</th>
+    <th>Rating</th>
+    <th>Total Flights</th>
+    <th>Minimum Flight cost</th>
+</tr>
+
+{% for a in airlines %}
+<tr>
+{% for j in a %}
+<td>{{j}}</td>
+{% endfor %}
+</tr>
+{% endfor %}
+</table>

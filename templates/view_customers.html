@@ -1,0 +1,23 @@
+<h1> View Customers</h1>
+<form action="{{ url_for("view_customers")}}" method="post" enctype="multipart/form-data">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" placeholder="name">
+    <input type="submit">
+<table>
+
+<tr>
+    <th>Name</th>
+    <th>Average Rating</th>
+    <th>Location</th>
+    <th>Is Owner</th>
+    <th>Total Seats Purchased</th>
+</tr>
+
+{% for a in customers %}
+<tr>
+{% for j in a %}
+<td>{{j}}</td>
+{% endfor %}
+</tr>
+{% endfor %}
+</table>
