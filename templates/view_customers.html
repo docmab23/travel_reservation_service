@@ -1,9 +1,18 @@
+<html>
+<head> <script src=
+    "https://www.kryogenix.org/code/browser/sorttable/sorttable.js">
+        </script>
+      </head>
+<body>
+    <input type="text" class="live-search-box" placeholder="search here" />
 <h1> View Customers</h1>
 <form action="{{ url_for("view_customers")}}" method="post" enctype="multipart/form-data">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" placeholder="name">
     <input type="submit">
-<table>
+    <button type="submit" name="Back" value="Back">Back</button>
+</form>
+<table id="mytable" class="sortable">
 
 <tr>
     <th>Name</th>
@@ -21,3 +30,7 @@
 </tr>
 {% endfor %}
 </table>
+
+</form>
+</body>
+</html>
