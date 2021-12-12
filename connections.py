@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, render_template_string
 import hashlib
 # from flask_mysqldb import MySQLpip
 import mysql.connector
@@ -6,15 +6,21 @@ import re
 import sys
 import json
 from datetime import date
+from datetime import datetime
+
+from flask_bootstrap import Bootstrap
+
+
 def intersection(lst1, lst2):
     return list(set(lst1) & set(lst2))
 
 today = date.today()
 
 app = Flask(__name__, static_url_path="")
+Bootstrap(app)
 app.secret_key = 'cs4400fall2021'
 
-
+users=["admin","cowner" ,"customer","owner"]
 db_connection = mysql.connector.connect(host="localhost",
                                         user="root",
                                         passwd="armaloc23",
@@ -26,7 +32,7 @@ def login():
     if request.method == 'GET':
         return render_template('index.html', msg='')
 
-    if request.method == 'POST':
+    if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
         cursor = db_connection.cursor(buffered=True)
         email = request.form['email']
         password = request.form['password']
@@ -37,11 +43,38 @@ def login():
 
         #If it finds the user credentials in the DB, it then seeks to update the session accordingly
         if result:
-            return 'Hello ' + str(email)
             #checkForPermissions()
+            session['loggedin'] = True
+            session['username'] = email
+            
+            query2="SELECT EXISTS(SELECT * FROM admins WHERE Email= %s)"
+            cursor.execute(query2,(email,))
+            data=cursor.fetchall()
+            if data[0][0]==1:
+                session['userType'] = users[0]
+                return redirect("/admin")
+            else:
+                 query3="SELECT EXISTS(SELECT * FROM Customer WHERE Email= %s)"
+                 query4="SELECT EXISTS(SELECT * FROM owners WHERE Email= %s)"
+                 cursor.execute(query3,(email,))
+                 data1=cursor.fetchall()
+                 cursor.execute(query4,(email,))
+                 data2=cursor.fetchall()
+                 if data1[0][0]==1 and data2[0][0]==1:
+                     session['userType'] = users[1]
+                     return redirect("/choice")
+                 elif data1[0][0]:
+                     session['userType'] = users[2]
+                     return redirect("/customer_home")
+                 elif data2[0][0]==1:
+                     session['userType'] = users[3]
+                     return redirect("/owner_home")
+                 
+        else:
+            msg="Login Failed , You need to register"
 
-        cursor.close()
-        return "Login Failed"
+        cursor.close()  
+    return render_template("index.html", msg=msg)      
 
 
 
@@ -110,6 +143,9 @@ def register_customer():
 def admin():
     return render_template("admin.html")
 
+@app.route('/choice', methods=['GET', 'POST'])
+def choice():
+    return render_template("choice.html")
 
 @app.route('/admin/sc_flight', methods=['GET', 'POST'])
 def sc_flight():
@@ -162,11 +198,10 @@ def sc_flight():
 
          return render_template("sc_flight.html",airlines=airlines,cur_date=cur_date)
 
-
 @app.route('/admin/remove_flight',methods=["GET","POST"])
 def remove_flight():
     i=0
-    cur_date=today
+    cur_date='2021-09-18'
     q3="SELECT Flight_Num,Airline_Name,Flight_Date from flight"
     cursor = db_connection.cursor()
     cursor.execute(q3)
@@ -212,25 +247,36 @@ def remove_flight():
      fl=list(fl)
      fl=[list(f) for f in fl]
      #print(fl)
-     option = request.form.getlist('options')
+     if request.form.get("options"):
+      option = request.form.getlist('options')
     # print(option)
      #option = request.form.getlist('options')
      #flight_num,airline_name=option[0],option[1]
      #print((option))
     # print(flight_num,airline_name)
-     f_no= option[0].split(",")[0].replace("[","").replace("(","").replace("'","")
-     a_no= option[0].split(",")[1].replace("'","")
-     print(f_no , a_no)
+      f_no= (option[0].split(",")[0].replace("[","").replace("(","").replace("'",""))
+      a_no= option[0].split(",")[1].replace("'","")
+      #a_no= set(a_no)
+      #g=set('Un Airlines')
+      #(g.difference(a_no))
+      a_no = a_no[:0] + "" + a_no[1:]
+      print(f_no,a_no,cur_date)
      
-     cursor.callproc('remove_flight',(f_no,a_no,cur_date))
-     print(cursor.fetchall())
-     
+      cursor.execute("call remove_flight(%s , %s , %s)",(f_no,a_no,cur_date))
+      print(type(fno), type)
+      print(cursor.fetchall())
+      results = [r.fetchall() for r in cursor.stored_results()]
+      print(results)
+      db_connection.commit()
+
+      cursor.close()
      
 
 
 
     
     return render_template('remove_flight.html',cur_date=cur_date,airlines=airlines,fl=fl)
+
 
 @app.route('/admin/view_airport',methods=["GET","POST"])
 def view_airport():
@@ -243,6 +289,7 @@ def view_airport():
     max_len=len(a_data[0])-1
     
     if request.method=="POST":
+
         id=request.form["ID"]
         tz=request.form['tz']
 
@@ -259,7 +306,10 @@ def view_airport():
            dh=cursor.fetchall()
            dh=list(dh)
            a_data=intersection(a_data,dh)
+    
 
+        if request.form.get('reset_')=='Reset':
+               return redirect("/admin/view_airport")
 
 
 
@@ -302,9 +352,16 @@ def view_customers():
             q1=("SELECT * From view_customers WHERE customer_name like %%s% ")
             cursor.execute(q1,(name,))
             customers=cursor.fetchall()
+        
+        if request.form.get('reset_')=='Reset':
+               return redirect("/admin/view_customers")
+
+         
 
 
-    return render_template("view_customers.html",customers=customers)
+
+    return render_template("viewc.html",customers=customers)
+
 
 
     
