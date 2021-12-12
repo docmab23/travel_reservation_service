@@ -156,11 +156,13 @@ def sc_flight():
 
 @app.route('/admin/remove_flight',methods=["GET","POST"])
 def remove_flight():
+    i=0
     cur_date=today
     q3="SELECT Flight_Num,Airline_Name,Flight_Date from flight"
     cursor = db_connection.cursor()
     cursor.execute(q3)
     fl=cursor.fetchall()
+    fl1= ["".join(f[0:2]) for f in fl ]
 
     query="SELECT Airline_Name from airline"
     cursor.execute(query)
@@ -200,20 +202,26 @@ def remove_flight():
 
      fl=list(fl)
      fl=[list(f) for f in fl]
-
-     #option = request.form['options']
-    # print(option)
+     #print(fl)
      option = request.form.getlist('options')
+    # print(option)
+     #option = request.form.getlist('options')
      #flight_num,airline_name=option[0],option[1]
-     print((option))
+     #print((option))
     # print(flight_num,airline_name)
+     f_no= option[0].split(",")[0].replace("[","").replace("(","").replace("'","")
+     a_no= option[0].split(",")[1].replace("'","")
+     print(f_no , a_no)
+     
+     cursor.callproc('remove_flight',(f_no,a_no,cur_date))
+     print(cursor.fetchall())
+     
      
 
 
 
-
+    
     return render_template('remove_flight.html',cur_date=cur_date,airlines=airlines,fl=fl)
-
 
 @app.route('/admin/view_airport',methods=["GET","POST"])
 def view_airport():
