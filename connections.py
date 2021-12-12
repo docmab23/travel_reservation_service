@@ -110,6 +110,7 @@ def register_customer():
 def admin():
     return render_template("admin.html")
 
+
 @app.route('/admin/sc_flight', methods=['GET', 'POST'])
 def sc_flight():
          cur_date=today
@@ -118,24 +119,31 @@ def sc_flight():
          cursor.execute(query)
          airlines= cursor.fetchall()
          airlines=[a[0] for a in airlines]
-         def sc(fno,a_name,f_airport,d_time,a_time,f_date,cost,cpc,c_date):
-             #q="call schedule_flight(%s , %s , %s , %s , %s,%s,%s ,%s ,%s ,%s)"
-             cursor.callproc('schedule_flight',(fno,a_name,f_airport,d_time,a_time,f_date,cost,cpc,c_date))
+         print(session['username'])
          if request.method=="POST":
-           fno=request.form['Fno']
+           fno=str(request.form['Fno'])
            f_airport=request.form['From Airport']
            t_airport=request.form['To Airport']
            d_time=request.form['d_time']
            a_time=request.form['a_time']
-           f_date=request.form['Flight Date']
-           c_date=request.form['Current Date']
-           cost=request.form['Cost per person']
-           cpc=request.form['Capacity']
+           f_date=str(request.form['Flight Date'])
+           c_date=str(request.form['Current Date'])
+           cost=float(request.form['Cost per person'])
+           cpc=int(request.form['Capacity'])
            airline_=request.form['airlines']
+           d_time = datetime.strptime(d_time, "%H:%M")
+           d_time=str(d_time.strftime("%H:%M:%S"))
+           a_time= datetime.strptime(a_time, "%H:%M")
+           a_time= str(a_time.strftime("%H:%M:%S"))
+           print(session['username'])
            print(fno,airline_,f_airport,t_airport,d_time,a_time,f_date,cost,cpc,c_date)
            if request.form.get('sc')=='Schedule Flight':
 
-                cursor.callproc('schedule_flight',(fno,airline_,f_airport,t_airport,d_time,a_time,f_date,cost,cpc,c_date))
+                q=("call schedule_flight(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)")
+                cursor.execute(q,(fno,airline_,f_airport,t_airport,d_time,a_time,f_date,cost,cpc,c_date))
+                print(type(a_time))
+                res=cursor.fetchall()
+                print(res)
            if request.form.get('cancel')=='Cancel':
                return render_template("sc_flight.html",airlines=airlines,cur_date=cur_date)
 
@@ -153,6 +161,7 @@ def sc_flight():
 
 
          return render_template("sc_flight.html",airlines=airlines,cur_date=cur_date)
+
 
 @app.route('/admin/remove_flight',methods=["GET","POST"])
 def remove_flight():
