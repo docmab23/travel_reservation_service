@@ -1,36 +1,58 @@
+<!DOCTYPE html>
 <html>
-<head> <script src=
+<head>
+	<script src=
     "https://www.kryogenix.org/code/browser/sorttable/sorttable.js">
         </script>
-      </head>
+</head>
 <body>
-    <input type="text" class="live-search-box" placeholder="search here" />
-<h1> View Customers</h1>
-<form action="{{ url_for("view_customers")}}" method="post" enctype="multipart/form-data">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" placeholder="name">
-    <input type="submit">
-    <button type="submit" name="Back" value="Back">Back</button>
-</form>
-<table id="mytable" class="sortable">
 
-<tr>
-    <th>Name</th>
-    <th>Average Rating</th>
-    <th>Location</th>
-    <th>Is Owner</th>
-    <th>Total Seats Purchased</th>
-</tr>
+<input type="text" class="live-search-box" placeholder="search here" />
 
-{% for a in customers %}
-<tr>
-{% for j in a %}
-<td>{{j}}</td>
-{% endfor %}
-</tr>
-{% endfor %}
-</table>
+<table class="live-search-list sortable" type="None">
+            <th>Name</th>
+            <th>Average Rating</th>
+            <th>Location</th>
+            <th>Is Owner</th>
+            <th>Total Seats Purchased</th>
+        
+        {% for a in customers %}
+        <tr>
+        {% for j in a %}
+        <td>{{j}}</td>
+        {% endfor %}
+        </tr>
+        {% endfor %}
+        </table>
+        
 
-</form>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+	jQuery(document).ready(function($){
+
+$('.live-search-list tr').each(function(){
+$(this).attr('data-search-term', $(this).text().toLowerCase());
+});
+
+$('.live-search-box').on('keyup', function(){
+
+var searchTerm = $(this).val().toLowerCase();
+
+	$('.live-search-list tr').each(function(){
+
+		if ($(this).filter('[data-search-term *= ' + searchTerm + ']').length > 0 || searchTerm.length < 1) {
+			$(this).show();
+		} else {
+			$(this).hide();
+		}
+
+	});
+
+});
+
+});
+</script>
+
 </body>
 </html>
