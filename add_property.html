@@ -1,0 +1,207 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	    <title>Owner Add Property</title>
+	    <meta charset="utf-8">
+		    <title>Owner Add Property</title>
+<style>
+    #t1 , th , td {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        width: 800px;
+        color:rgb(145, 179, 174);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        border: 1px black;
+        font-size:24px;
+    }
+    .form1{
+        border-collapse: collapse;
+        border-radius: 20px;
+        margin: 25px 0;
+        font-size: 0.9em;
+        color:darkslategray;
+        font-family: sans-serif;
+        min-width: 400px;
+    
+    
+    
+    
+    }
+    .h1main{
+        color:rgb(100, 134, 129);
+        text-align: center;
+        font-size: xx-large;
+    
+    
+    
+    }
+    button ,.name,.in_name{
+    
+        border-radius: 12px;
+        color:rgb(145, 179, 174);
+        font-size: 24px;
+    }
+    
+    .head_row{
+    align-content: center;
+    text-align: center;
+    
+    }
+    input[type=text], select {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      height: 30px;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    input[type=submit], select {
+      width: 50%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      height: 30px;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      text-size-adjust: 30px;
+      height:50px;
+    }
+
+
+</style>
+	</head>
+	<body>
+		<div class="register main">
+			<h1 class="h1main">Owner Add Property</h1>
+
+			<form action="{{ url_for('add_property') }}" method="post" autocomplete="off">
+				<label for="propertyname">
+					<i>Name:</i>
+				</label>
+                <input type="text" name="propertyname" placeholder=" " id="propertyname" required>
+
+
+                <label for="propertydescription">
+					<i>Description:</i>
+				</label>
+				<input type="text" name="propertydescription" placeholder=" " id="propertydescription" required>
+
+                <label for="capacity">
+					<i>Capacity:</i>
+				</label>
+				<input type="text" name="capacity" placeholder=" " id="capacity" required>
+
+
+                <br>
+                <br>
+
+                <label for="street">
+					<i>Street:</i>
+				</label>
+				<input type="text" name="street" placeholder=" " id="street" required>
+
+
+                <label for="city">
+					<i>City:</i>
+				</label>
+				<input type="text" name="city" placeholder=" " id="city" required>
+
+
+                <label for="state">
+					<i>State:</i>
+				</label>
+				<!-- <input type="text" name="state" placeholder=" " id="state" required> -->
+                <select name="state" id="state">
+                        <option value="AL">AL</option>
+                        <option value="AK">AK</option>
+                        <option value="AZ">AZ</option>
+                        <option value="AR">AR</option>
+                        <option value="CA">CA</option>
+                        <option value="CO">CO</option>
+                        <option value="CT">CT</option>
+                        <option value="DE">DE</option>
+                        <option value="DC">DC</option>
+                        <option value="FL">FL</option>
+                        <option value="GA">GA</option>
+                        <option value="HI">HI</option>
+                        <option value="ID">ID</option>
+                        <option value="IL">IL</option>
+                        <option value="IN">IN</option>
+                        <option value="IA">IA</option>
+                        <option value="KS">KS</option>
+                        <option value="KY">KY</option>
+                        <option value="LA">LA</option>
+                        <option value="ME">ME</option>
+                        <option value="MD">MD</option>
+                        <option value="MA">MA</option>
+                        <option value="MI">MI</option>
+                        <option value="MN">MN</option>
+                        <option value="MS">MS</option>
+                        <option value="MO">MO</option>
+                        <option value="MT">MT</option>
+                        <option value="NE">NE</option>
+                        <option value="NV">NV</option>
+                        <option value="NH">NH</option>
+                        <option value="NJ">NJ</option>
+                        <option value="NM">NM</option>
+                        <option value="NY">NY</option>
+                        <option value="NC">NC</option>
+                        <option value="ND">ND</option>
+                        <option value="OH">OH</option>
+                        <option value="OK">OK</option>
+                        <option value="OR">OR</option>
+                        <option value="PA">PA</option>
+                        <option value="RI">RI</option>
+                        <option value="SC">SC</option>
+                        <option value="SD">SD</option>
+                        <option value="TN">TN</option>
+                        <option value="TX">TX</option>
+                        <option value="UT">UT</option>
+                        <option value="VT">VT</option>
+                        <option value="VA">VA</option>
+                        <option value="WA">WA</option>
+                        <option value="WV">WV</option>
+                        <option value="WI">WI</option>
+                        <option value="WY">WY</option>
+                </select>
+
+
+                <label for="zip">
+					<i>Zip:</i>
+				</label>
+				<input type="text" name="zip" placeholder=" " id="zip" required>
+
+
+                <br>
+                <br>
+
+
+                <label for="nearestairport">
+					<i>Nearest Airport:</i>
+				</label>
+				<input type="text" name="nearestairport" placeholder=" " id="nearestairport" required>
+
+
+                <label for="disttoairport">
+					<i>Dist To Airport: </i>
+				</label>
+				<input type="text" name="disttoairport" placeholder=" " id="disttoairport" required>
+
+
+                <br>
+                <br>
+
+
+                <input type="cancel" value="Cancel">
+				<input type="submit" value="Add">
+				 <div class="msg" style="padding: 10px">{{ msg }}</div>
+			</form>
+		</div>
+	</body>
+</html>

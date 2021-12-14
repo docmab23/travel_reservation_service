@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	    <title>Customer Register</title>
+	    <meta charset="utf-8">
+		    <title></title>
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+
+			<style>
+.heading{
+    color:rgb(100, 134, 129);
+    text-align: center;
+    align-content: center;
+    font-size: 50px;
+    color: rgb(88, 128, 122);
+    font: 1em sans-serif;
+    align-items: center;
+
+}
+
+.submit,.reset{
+
+    border-radius: 20px;
+    color:rgb(145, 179, 174);
+    font-size: 15px;
+    text-align: center;
+    vertical-align: middle;
+    }
+
+
+input,select{
+    width: 150px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+  background-color: white;
+  background-image: url('searchicon.png');
+  background-position: 10px 10px; 
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  transition: width 0.4s ease-in-out;
+  text-align: center;
+}
+label{
+
+    font-size:24px;
+}
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type=number], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type=date], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Style the submit button */
+input[type=submit] {
+  width: 100%;
+  background-color:rgb(124, 161, 156);
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[type=reset] {
+  width: 50%;
+  background-color:rgb(124, 161, 156);
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Add a background color to the submit button on mouse-over */
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+			</style>
+	</head>
+	<body>
+		<div class="register main">
+			<h1 class="h1main">Customer Registration</h1>
+
+			</div>
+			<form action="{{ url_for('register_customer') }}" method="post" autocomplete="off">
+				<label for="FirstName">
+					<i>First Name</i>
+				</label>
+				<input type="text" name="firstName" placeholder="First" id="firstName" required>
+
+				<label for="LastName">
+					<i>Last Name</i>
+				</label>
+				<input type="text" name="lastName" placeholder="Last" id="lastName" required>
+				<label for="email">
+					<i class="fas fa-user"></i>
+				</label>
+				<input type="email" name="email" placeholder="Ex@email.com" id="email" required>
+				<label for="password">
+					<i class="fas fa-lock"></i>
+				</label>
+				<input type="password" name="password" placeholder="Password" id="password" required>
+				<label for="confirm_password">
+					<i class="fas fa-lock"></i>
+				</label>
+				<input type="password" name="confirm_password" placeholder="Confirm Password" id="confirm_password" required>
+				<label for="Phonenumber">
+					<i class="fas fa-lock"></i>
+				</label>
+				<input type="text" name="phonenumber" placeholder="404-468-8277" id="phonenumber" required>
+				
+				<br>
+
+
+
+				<label for="cardno">
+					<i class="fas fa-credit-card"></i>
+				</label>
+				<input type="text" name="cardno" placeholder="Card no. (e.g. 0000-0000-0000-0000)">
+
+				<input type="text" name="cvvno" placeholder="CVV (e.g. 123)">
+				
+
+				<input type="month" name="expire" required="" style="margin-right: 120px; margin-bottom: 20px;">
+				
+				
+				<input type="submit" value="Register Customer">
+				<div class="msg" style="padding: 10px">{{ msg }}</div> 
+			</form>
+		</div>
+	</body>
+</html>

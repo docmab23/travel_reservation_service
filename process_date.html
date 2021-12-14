@@ -1,0 +1,7 @@
+<h1> Process Date</h1>
+<form action="{{ url_for("process_date") }}" method="post" enctype="multipart/form-data">
+    <label for="date">Set Current System Date:</label>
+    <input type="date" id="date" name="date" placeholder="MM/DD/YYYY">
+</input>
+<button type="button"> <a href="/admin">Back</a> </button>
+<button type="submit"> <a>Set Date</a> </button>

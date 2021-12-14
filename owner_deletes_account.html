@@ -1,0 +1,72 @@
+<style>
+  .header{
+      color:rgb(145, 179, 174);
+      text-align: center;
+      font-size:  50px;
+      font-style:normal;
+      
+  
+  }
+  .but1{
+      border-radius: 12px;
+      color:rgb(3, 38, 73);
+      font-size: 20px;
+      background: rgb(199, 212, 210);
+  }
+      input[type=submit]{
+      border-radius: 12px;
+      color:rgb(3, 38, 73);
+      font-size: 20px;
+      background: rgb(199, 212, 210);
+  }
+  .buttons{
+  
+      text-align: center;
+  }
+  .msg{
+
+      color:rgb(117, 167, 159);
+      font-family: 'Times New Roman', Times, serif;
+      font-weight: bolder;
+      text-align: center;
+  
+  }
+  
+  
+  </style>
+
+<h1 class="header">Delete Owner Account</h1>
+
+<h2 class="header">Are you sure you want to delete your Owner account?</h2>
+
+<form action="{{ url_for("owner_deletes_account")}}" method="post" enctype="multipart/form-data" class="form1">
+  <input type="submit" value="Delete account" name="da" />
+  <input type="submit" value="Logout" name="lg"/>
+
+
+
+    <div class="msg" style="padding: 10px">{{ msg }}</div>
+
+<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+        $(function() {
+          $('a#test').on('click', function(e) {
+            e.preventDefault()
+            $.getJSON('/delete_process',
+                function(data) {
+              //do nothing
+            });
+            return false;
+          });
+        });
+</script>
+
+
+
+<div class='container'>
+    <h3>Are you sure you want to delete your Owner account?</h3>
+        <form>
+            <a href=# id=test><button class='btn btn-default'>Delete Account</button></a>
+        </form>
+
+</div> -->
